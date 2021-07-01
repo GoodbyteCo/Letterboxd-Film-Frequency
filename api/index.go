@@ -89,7 +89,7 @@ func scrape(url string, ch chan string) {
 	})
 
 	c.Visit(url)
-	c.Wait()
 	wg.Wait()
+	c.Wait()
 	close(ch)
 }
