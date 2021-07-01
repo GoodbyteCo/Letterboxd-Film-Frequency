@@ -9,8 +9,9 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "glob-parent": "5.1.2",
     "vue": "^3.0.0",
-    "vue-tippy": "v4"
+    "vue-tippy": "^6.0.0-alpha.30"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
