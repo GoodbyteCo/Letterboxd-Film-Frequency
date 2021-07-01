@@ -16,7 +16,7 @@
 
 			<div>
 				<label for="year">Year</label>
-				<select id="year" v-on:change="$emit('change')">
+				<select id="year">
 					<option v-for="yearOption in range(currentYear, 2011)"
 						:key="yearOption"
 						:value="yearOption"
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-	import { defineProps, defineEmit } from 'vue'
+	import { defineProps } from 'vue'
 
 	const props = defineProps({
 		username: String,
@@ -40,8 +40,6 @@
 			default: new Date().getFullYear()
 		}
 	})
-
-	const emit = defineEmit(['change'])
 
 	const currentYear = new Date().getFullYear()
 
@@ -98,6 +96,7 @@
 		width: 100%;
 		max-width: none;
 		box-sizing: border-box;
+		-webkit-appearance: none;
 
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 		-webkit-font-smoothing: antialiased;
