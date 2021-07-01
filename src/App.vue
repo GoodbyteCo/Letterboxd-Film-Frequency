@@ -1,5 +1,5 @@
 <template>
-	<img alt="Vue logo" src="./assets/logo.png" />
+	<div>Test</div>
 	<contrib-bar :name="qjack" />
 </template>
 
