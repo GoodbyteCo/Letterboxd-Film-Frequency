@@ -35,6 +35,22 @@
 		--space: 30px;
 	}
 
+	.tippy-box[data-theme~='standard-dark']
+	{
+		background-color: #1d2229;
+		border: 1px solid rgba(173, 190, 208, 0.4);
+		color: rgba(173, 190, 208, 0.6);
+		padding: 5px 10px;
+		border-radius: 6px;
+		box-shadow:
+			0 1px 2px rgba(0, 0, 0, 0.05),
+			0 2px 4px rgba(0, 0, 0, 0.15);
+	}
+
+	.tippy-box[data-theme~='standard-dark'] b
+	{
+		color: var(--light);
+		font-weight: normal;
 	}
 
 	body
