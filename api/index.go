@@ -73,13 +73,13 @@ func scrape(url string, ch chan string) {
 
 	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: 1000})
 	c.OnHTML("td.td-day.diary-day.center", func(e *colly.HTMLElement) {
+		wg.Add(1)
 		run := func() {	
 			log.Println("inner starting")
-			wg.Add(1)
 			dateUrl := e.ChildAttr("a[href]", "href")
 			match := re.FindStringSubmatch(dateUrl)
 			ch <- match[1]
-			log.Println("inner not done")
+			log.Println("inner done")
 			wg.Done()
 		}
 		go run()
@@ -92,6 +92,7 @@ func scrape(url string, ch chan string) {
 
 	c.Visit(url)
 	c.Wait()
+	log.Println("done scrape")
 	wg.Wait()
 	log.Println("done closing")
 	close(ch)
