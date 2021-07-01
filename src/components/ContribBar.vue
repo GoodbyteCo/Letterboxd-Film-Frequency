@@ -15,7 +15,7 @@ export default {
 			const res = await fetch(`/api?user=${props.name}`);
 			const json = await res.json();
 			yearData.value = json.data;
-			console.log(yearData);
+			console.log(json.data);
 		};
 
 		onMounted(getData);
