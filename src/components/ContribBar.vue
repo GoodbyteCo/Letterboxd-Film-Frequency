@@ -11,6 +11,7 @@ export default {
 	},
 	setup(props) {
 		const yearData = ref({});
+		console.log(props.name);
 		const getData = async () => {
 			const res = await fetch(`/api?user=${props.name}`);
 			const json = await res.json();
