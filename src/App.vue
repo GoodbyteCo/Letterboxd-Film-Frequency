@@ -1,6 +1,6 @@
 <template>
 	<div>Test</div>
-	<contrib-bar :name="qjack" />
+	<contrib-bar name="qjack" />
 </template>
 
 <script>
