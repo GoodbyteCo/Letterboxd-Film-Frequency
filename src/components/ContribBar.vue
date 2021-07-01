@@ -1,5 +1,5 @@
 <template>
-	<div></div>
+	<div>hello</div>
 </template>
 
 <script>
@@ -18,7 +18,7 @@ export default {
 			console.log(json.data);
 		};
 
-		onMounted(getData);
+		onMounted(getData());
 
 		return {
 			yearData
