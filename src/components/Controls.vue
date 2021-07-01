@@ -59,7 +59,7 @@
 <style scoped>
 	form
 	{
-		margin-bottom: 30px;
+		margin: 0 var(--space) var(--space);
 	}
 
 	fieldset
@@ -107,7 +107,7 @@
 		padding: 0.5ch 1.2ch;
 		border: 1px solid var(--accent-0);
 		border-radius: 6px;
-		background: hsla(0, 0%, 100%, 0.02);
+		background-color: hsla(0, 0%, 100%, 0.02);
 		box-shadow:
 			0 1px 2px rgba(0, 0, 0, 0.05),
 			0 2px 4px rgba(0, 0, 0, 0.15);
@@ -121,13 +121,22 @@
 		opacity: 0.4;
 	}
 
+	select
+	{
+		background-image: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 9.4"><path d="M0 1.4L1.4 0 8 6.6 14.6 0 16 1.4l-8 8z" fill="%23adbed0"/></svg>');
+		background-position: right 1ch top 53%;
+		background-size: 1ch;
+		background-repeat: no-repeat;
+		padding-right: 2.4ch;
+	}
+
 	input:hover, select:hover, input:focus, select:focus
 	{
 		box-shadow:
 			0 2.5px 2.9px rgba(0, 0, 0, 0.25),
 			0 4.1px 8.8px rgba(0, 0, 0, 0.543),
 			0 10px 15px rgba(0, 0, 0, 0.66);
-		background: hsla(0, 0%, 100%, 0.06);
+		background-color: hsla(0, 0%, 100%, 0.06);
 		border-color: var(--accent-5);
 		outline: none;
 	}
