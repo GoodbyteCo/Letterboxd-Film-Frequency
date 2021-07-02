@@ -148,4 +148,19 @@
 		height: 0px;
 		user-select: none;
 	}
+
+	@media screen and (max-width: 445px)
+	{
+		fieldset
+		{
+			flex-direction: column;
+			margin-bottom: 60px;
+		}
+
+		fieldset *
+		{
+			width: 100%;
+			max-width: none;
+		}
+	}
 </style>
