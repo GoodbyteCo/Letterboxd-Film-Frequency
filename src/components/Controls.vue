@@ -1,0 +1,151 @@
+<template>
+	<form ref="form">
+		<fieldset>
+			<legend>Graph settings</legend>
+
+			<div class="username">
+				<label for="username">Letterboxd username</label>
+				<input type="text"
+					v-bind:value="username" 
+					placeholder="ex: holopollock" 
+					id="username" 
+					name="username"
+					required
+				>
+			</div>
+
+			<div>
+				<label for="year">Year</label>
+				<select id="year">
+					<option v-for="yearOption in range(currentYear, 2011)"
+						:key="yearOption"
+						:value="yearOption"
+						:selected="yearOption == year"
+					>
+						{{ yearOption }}
+					</option>
+				</select>
+			</div>
+		</fieldset>
+	</form>
+</template>
+
+<script setup>
+	import { defineProps } from 'vue'
+
+	const props = defineProps({
+		username: String,
+		year: {
+			type: Number,
+			default: new Date().getFullYear()
+		}
+	})
+
+	const currentYear = new Date().getFullYear()
+
+	const range = (start, end) => {
+		const isReverse = (start > end)
+		const targetLength = isReverse ? (start - end) + 1 : (end - start ) + 1
+		const arr = new Array(targetLength)
+		const b = Array.apply(null, arr)
+		const result = b.map((discard, n) => {
+			return (isReverse) ? n + end : n + start
+		})
+
+		return (isReverse) ? result.reverse() : result
+	}
+</script>
+
+<style scoped>
+	form
+	{
+		margin: 0 var(--space) var(--space);
+	}
+
+	fieldset
+	{
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: 10px;
+
+		border: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.username
+	{
+		flex-grow: 1;
+	}
+
+	label
+	{
+		display: block;
+		margin: 10px;
+		opacity: 0.4;
+
+		font-size: 0.8rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	input, select
+	{
+		display: block;
+		width: 100%;
+		max-width: none;
+		box-sizing: border-box;
+		-webkit-appearance: none;
+
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		font-size: 1.5rem;
+		color: var(--light);
+
+		padding: 0.5ch 1.2ch;
+		border: 1px solid var(--accent-0);
+		border-radius: 6px;
+		background-color: hsla(0, 0%, 100%, 0.02);
+		box-shadow:
+			0 1px 2px rgba(0, 0, 0, 0.05),
+			0 2px 4px rgba(0, 0, 0, 0.15);
+
+		transition: all 0.15s cubic-bezier(0,.5,0,1);
+	}
+
+	input::placeholder
+	{
+		color: var(--light);
+		opacity: 0.4;
+	}
+
+	select
+	{
+		background-image: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 9.4"><path d="M0 1.4L1.4 0 8 6.6 14.6 0 16 1.4l-8 8z" fill="%23adbed0"/></svg>');
+		background-position: right 1ch top 53%;
+		background-size: 1ch;
+		background-repeat: no-repeat;
+		padding-right: 2.4ch;
+	}
+
+	input:hover, select:hover, input:focus, select:focus
+	{
+		box-shadow:
+			0 2.5px 2.9px rgba(0, 0, 0, 0.25),
+			0 4.1px 8.8px rgba(0, 0, 0, 0.543),
+			0 10px 15px rgba(0, 0, 0, 0.66);
+		background-color: hsla(0, 0%, 100%, 0.06);
+		border-color: var(--accent-5);
+		outline: none;
+	}
+
+	legend
+	{
+		opacity: 0;
+		width: 0px;
+		height: 0px;
+		user-select: none;
+	}
+</style>
