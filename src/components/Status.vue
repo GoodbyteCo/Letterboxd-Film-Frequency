@@ -33,8 +33,8 @@
 	p
 	{
 		margin: 0 auto;
-		width: max-content;
-		max-width: 300px;
+		width: fit-content;
+		max-width: 330px;
 		text-align: center;
 		user-select: none;
 
