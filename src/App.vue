@@ -2,6 +2,7 @@
 	<controls :username="username" :year="year"/>
 	<status :message="statusMessage" :type="statusType"/>
 	<graph :year="year" :films="films"/>
+	<goodbyte-footer/>
 </template>
 
 <script setup>
@@ -9,6 +10,7 @@
 	import Controls from './components/Controls.vue'
 	import Status from './components/Status.vue'
 	import Graph from './components/Graph.vue'
+	import GoodbyteFooter from './components/Footer.vue'
 
 	const username = ref('')
 	const year = ref(new Date().getFullYear())
