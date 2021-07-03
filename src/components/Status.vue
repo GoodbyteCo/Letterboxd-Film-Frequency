@@ -1,5 +1,5 @@
 <template>
-	<div v-show="message.trim().length > 0">
+	<div v-show="message.trim().length > 0" aria-live="polite" role="alert">
 		<p :class="type">{{ message }}</p>
 	</div>
 </template>
