@@ -21,6 +21,11 @@
 	const statusType = ref('') // 'error', 'info', or empty
 
 	const updateUsername = (newUsername) => {
+		if (username.value == newUsername.trim()) {
+			// no change
+			return
+		}
+
 		username.value = newUsername
 
 		if (username.value.trim().length <= 0) {
