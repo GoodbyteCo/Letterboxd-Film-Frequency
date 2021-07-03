@@ -1,5 +1,5 @@
 <template>
-	<form ref="form">
+	<form>
 		<fieldset>
 			<legend>Graph settings</legend>
 

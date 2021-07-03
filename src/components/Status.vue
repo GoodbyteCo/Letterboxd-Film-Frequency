@@ -17,7 +17,7 @@
 	div
 	{
 		display: flex;
-    	align-items: center;
+		align-items: center;
 		position: absolute;
 		left: 0;
 		right: 0;
@@ -26,7 +26,7 @@
 
 		padding: 0 var(--space);
 		height: 12vw;
-    	min-height: 95px;
+		min-height: 95px;
 		max-height: 120px;
 	}
 
