@@ -74,6 +74,7 @@
 	{
 		background: var(--accent-5);
 		color: var(--dark);
+		text-shadow: none;
 	}
 
 	#app
