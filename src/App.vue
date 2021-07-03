@@ -63,9 +63,15 @@
 		background: var(--dark);
 		color: var(--light);
 
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
+	}
+
+	::selection
+	{
+		background: var(--accent-5);
+		color: var(--dark);
 	}
 
 	#app
