@@ -7,8 +7,10 @@
 				<label for="username">Letterboxd username</label>
 				<input type="text"
 					id="username" 
-					name="username"
+					name="u"
 					placeholder="ex: holopollock"
+					:value="username"
+					@change="username = $event.target.value"
 					v-on:blur="changeUsername($event.target.value)"
 					v-on:keyup.enter="changeUsername($event.target.value)"
 					required
@@ -39,6 +41,13 @@
 		changeUsername: Function,
 		changeYear: Function
 	})
+
+	const urlParams = new URLSearchParams(window.location.search)
+	const username = ref(urlParams.get("u"))
+
+	if (username.value != null) {
+		props.changeUsername(username.value)
+	}
 
 	const range = (start, end) => {
 		const isReverse = (start > end)
