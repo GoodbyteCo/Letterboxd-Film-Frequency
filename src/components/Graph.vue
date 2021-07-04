@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-	import { defineProps, computed } from 'vue'
+	import { computed } from 'vue'
 	import { directive } from 'vue-tippy'
 
 	const props = defineProps({
