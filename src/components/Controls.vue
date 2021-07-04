@@ -38,10 +38,14 @@
 	
 	const currentYear = new Date().getFullYear()
 	const selectedYear = ref(currentYear)
+	const emit = defineEmit(["changeUsername", "changeYear"])
 
 	const urlParams = new URLSearchParams(window.location.search)
 	const username = ref(urlParams.get("u"))
-	const emit = defineEmit(["changeUsername", "changeYear"])
+
+	if (username.value != null) {
+		emit("changeUsername", username.value)
+	}
 
 	const props = defineProps({
 		lowestYear: {
