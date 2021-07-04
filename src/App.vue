@@ -31,6 +31,8 @@
 	})
 
 	watch(year, (newYear) => {
+		console.log("----")
+		console.log(newYear)
 		year.value = parseInt(newYear)
 	})
 
@@ -51,7 +53,6 @@
 
 		fetch(`/api?user=${username}`)
 			.then(function (res) {
-				
 
 				if (res.status == 404) {
 					statusMessage.value = 'Error: username not found'
