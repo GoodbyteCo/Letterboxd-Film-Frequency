@@ -19,7 +19,7 @@
 
 			<div>
 				<label for="year">Year</label>
-				<select id="year" @change="changeYear($event.target.value)">
+				<select id="year" @change="changeYear($event.target.value); selectedYear = $event.target.value">
 					<option v-for="year in range(currentYear, lowestYear)"
 						:key="year"
 						:value="year"
@@ -37,6 +37,7 @@
 	import { ref } from 'vue'
 	
 	const currentYear = new Date().getFullYear()
+	const selectedYear = ref(currentYear)
 	const props = defineProps({
 		changeUsername: Function,
 		changeYear: Function,
@@ -54,7 +55,7 @@
 	}
 
 	const range = (start, end) => {
-		if (start < end) {
+		if (selectedYear.value < end) {
 			props.changeYear(currentYear)
 		}
 		const targetLength = (start - end) + 1
