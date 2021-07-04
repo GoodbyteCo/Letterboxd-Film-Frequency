@@ -11,8 +11,8 @@
 					placeholder="ex: holopollock"
 					:value="username"
 					@change="username = $event.target.value"
-					v-on:blur="changeUsername($event.target.value)"
-					v-on:keyup.enter="changeUsername($event.target.value)"
+					v-on:blur="changeUsername($event.target.value); year = new Date().getFullYear()"
+					v-on:keyup.enter="changeUsername($event.target.value); year = new Date().getFullYear()"
 					required
 				>
 			</div>
