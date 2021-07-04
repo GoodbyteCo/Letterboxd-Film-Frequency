@@ -88,6 +88,7 @@
 		font-size: 0.8rem;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
+		user-select: none;
 	}
 
 	input, select
@@ -98,7 +99,7 @@
 		box-sizing: border-box;
 		-webkit-appearance: none;
 
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		font-size: 1.5rem;
@@ -128,6 +129,7 @@
 		background-size: 1ch;
 		background-repeat: no-repeat;
 		padding-right: 2.4ch;
+		user-select: none;
 	}
 
 	input:hover, select:hover, input:focus, select:focus
