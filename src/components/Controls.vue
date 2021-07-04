@@ -35,12 +35,7 @@
 
 <script setup>
 	import { ref, watch } from 'vue'
-	
-	const currentYear = new Date().getFullYear()
-	const selectedYear = ref(currentYear)
 
-	const urlParams = new URLSearchParams(window.location.search)
-	const username = ref(urlParams.get("u"))
 	const emit = defineEmit(["changeUsername", "changeYear"])
 
 	const props = defineProps({
@@ -49,6 +44,16 @@
 			default: 2011
 		}
 	})
+	
+	const currentYear = new Date().getFullYear()
+	const urlParams = new URLSearchParams(window.location.search)
+
+	const selectedYear = ref(currentYear)
+	const username = ref(urlParams.get("u"))
+
+	if (username != null) {
+		emit("changeYear", username)
+	}
 
 	const range = (start, end) => {
 		if (selectedYear.value < end) {
