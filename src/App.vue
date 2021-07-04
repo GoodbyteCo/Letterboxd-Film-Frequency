@@ -68,6 +68,7 @@
 				films.value = json.data
 
 				lowestYear.value = Math.min(...Object.keys(json.data))
+				year.value = new Date().getFullYear()
 			})
 	}
 
