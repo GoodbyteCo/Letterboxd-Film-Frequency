@@ -1,7 +1,7 @@
 <template>
 	<controls 
-		:change-username="(u) => updateUsername(u)"
-		:change-year="(y) => updateYear(y)"
+		v-on:changeUsername="username = $event"
+		v-on:changeYear="year = $event"
 		:lowest-year="lowestYear"
 	/>
 	<status :message="statusMessage" :type="statusType"/>
@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-	import { ref } from 'vue'
+	import { ref, watch } from 'vue'
 	import Controls from './components/Controls.vue'
 	import Status from './components/Status.vue'
 	import Graph from './components/Graph.vue'
@@ -24,15 +24,21 @@
 	const statusMessage = ref('Enter your Letterboxd username to get data.')
 	const statusType = ref('') // 'error', 'info', or empty
 
-	const updateUsername = (newUsername) => {
-		if (username.value == newUsername.trim()) {
-			// no change
-			return
-		}
 
-		username.value = newUsername.trim()
+	watch(username, (newUsername) => {
+		console.log(newUsername)
+		updateGraph(newUsername)
+	})
 
-		if (username.value.trim().length <= 0) {
+	watch(year, (newYear) => {
+		year.value = parseInt(newYear)
+	})
+
+	const updateGraph = (username) => {
+		console.log("++++")
+		console.log(username)
+
+		if (username.trim().length <= 0) {
 			statusMessage.value = 'Enter your Letterboxd username to get data.'
 			statusType.value = ''
 			window.history.replaceState(null, null, '/') // clear url params
@@ -41,10 +47,11 @@
 
 		statusMessage.value = 'Loading...'
 		statusType.value = 'info'
-		window.history.replaceState(null, null, '?u=' + username.value);
+		window.history.replaceState(null, null, '?u=' + username);
 
-		fetch(`/api?user=${username.value}`)
+		fetch(`/api?user=${username}`)
 			.then(function (res) {
+				
 
 				if (res.status == 404) {
 					statusMessage.value = 'Error: username not found'
@@ -68,10 +75,6 @@
 				films.value = json.data
 				lowestYear.value = Math.min(...Object.keys(json.data))
 			})
-	}
-
-	const updateYear = (newYear) => {
-		year.value = parseInt(newYear)
 	}
 
 </script>
