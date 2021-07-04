@@ -1,7 +1,7 @@
 # [Film Frequency](https://filmfrequency.vercel.app)
 **A contribution graph for Letterboxd**
 
-<!-- TODO: add screenshot -->
+![Screenshot of the Film Frequency website](screenshot.png)
 
 Film Frequency generates Github-like contribution graphs based on the number of films you've logged each day. 
 Just enter your Letterboxd username and select the year. Note that your Letterboxd profile must be public for
