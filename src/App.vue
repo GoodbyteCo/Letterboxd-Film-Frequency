@@ -66,9 +66,7 @@
 			.then(function(json) {
 				console.log(json.data)
 				films.value = json.data
-
 				lowestYear.value = Math.min(...Object.keys(json.data))
-				year.value = new Date().getFullYear()
 			})
 	}
 

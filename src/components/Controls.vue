@@ -11,8 +11,8 @@
 					placeholder="ex: holopollock"
 					:value="username"
 					@change="username = $event.target.value"
-					v-on:blur="changeUsername($event.target.value); year = new Date().getFullYear()"
-					v-on:keyup.enter="changeUsername($event.target.value); year = new Date().getFullYear()"
+					v-on:blur="changeUsername($event.target.value)"
+					v-on:keyup.enter="changeUsername($event.target.value)"
 					required
 				>
 			</div>
@@ -54,15 +54,14 @@
 	}
 
 	const range = (start, end) => {
-		const isReverse = (start > end)
-		const targetLength = isReverse ? (start - end) + 1 : (end - start ) + 1
+		if (start < end) {
+			changeYear(currentYear)
+		}
+		const targetLength = (start - end) + 1
 		const arr = new Array(targetLength)
 		const b = Array.apply(null, arr)
-		const result = b.map((discard, n) => {
-			return (isReverse) ? n + end : n + start
-		})
-
-		return (isReverse) ? result.reverse() : result
+		const result = b.map((discard, n) => n + end)
+		return result.reverse()
 	}
 </script>
 
