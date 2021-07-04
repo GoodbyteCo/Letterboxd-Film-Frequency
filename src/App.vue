@@ -1,7 +1,7 @@
 <template>
 	<controls 
 		v-on:changeUsername="username = $event"
-		v-on:changeYear="year = $event"
+		v-on:changeYear="year = parseInt($event)"
 		:lowest-year="lowestYear"
 	/>
 	<status :message="statusMessage" :type="statusType"/>
@@ -26,19 +26,10 @@
 
 
 	watch(username, (newUsername) => {
-		console.log(newUsername)
 		updateGraph(newUsername)
 	})
 
-	watch(year, (newYear) => {
-		console.log("----")
-		console.log(newYear)
-		year.value = parseInt(newYear)
-	})
-
 	const updateGraph = (username) => {
-		console.log("++++")
-		console.log(username)
 
 		if (username.trim().length <= 0) {
 			statusMessage.value = 'Enter your Letterboxd username to get data.'

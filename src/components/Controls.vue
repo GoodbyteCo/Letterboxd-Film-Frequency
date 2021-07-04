@@ -19,7 +19,7 @@
 
 			<div>
 				<label for="year">Year</label>
-				<select id="year" @change="$emit(changeYear, $event.target.value); selectedYear = $event.target.value">
+				<select id="year" @change="selectedYear = $event.target.value">
 					<option v-for="year in range(currentYear, lowestYear)"
 						:key="year"
 						:value="year"
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-	import { defineProps, defineEmit, ref, watch } from 'vue'
+	import { ref, watch } from 'vue'
 	
 	const currentYear = new Date().getFullYear()
 	const selectedYear = ref(currentYear)
@@ -66,9 +66,13 @@
 	}
 
 	watch(username, (user, prevUser) => {
-		console.log(user)
-		if (username.value != prevUser) {
+		if (user != prevUser) {
 			emit("changeUsername", user)
+		}
+	})
+	watch(selectedYear, (year, prevYear) => {
+		if (year != prevYear) {
+			emit("changeYear", year)
 		}
 	})
 </script>
