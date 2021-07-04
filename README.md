@@ -1,4 +1,4 @@
-# [Film Frequency](https://filmfrequency.vercel.app)
+# [Film Frequency](https://filmfrequency.com)
 **A contribution graph for Letterboxd**
 
 ![Screenshot of the Film Frequency website](screenshot.png)
