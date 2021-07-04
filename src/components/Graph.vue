@@ -29,7 +29,14 @@
 
 	// scale increment = 1/5th the maximum watched in any one day
 	// or if object is undefined, scale increment = 1
-	const scale = computed(() => Math.max(...Object.values(props.films || { 'default': 5 })) / 5 )
+	const scale = computed(() => {
+		try {
+			return Math.max(...Object.values(props.films[props.year] || { 'default': 5 })) / 5
+		}
+		catch (e) {
+			return 1
+		}
+	})
 
 	const getDate = (year, day) => {
 		var date = new Date(year, 0)
@@ -47,7 +54,13 @@
 	const filmsWatchedOn = (year, day) => {
 		var date = getDate(year, day);
 		var formattedDate = (date.getMonth() + 1) + '/' + date.getDate()
-		return props.films[formattedDate] || 0
+		
+		try {
+			return props.films[year][formattedDate] || 0
+		}
+		catch (e) {
+			return 0
+		}
 	}
 
 	const daysInTheYear = (year) => {

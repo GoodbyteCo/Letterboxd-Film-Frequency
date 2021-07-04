@@ -1,28 +1,31 @@
 <template>
-	<form>
+	<form @submit.prevent>
 		<fieldset>
 			<legend>Graph settings</legend>
 
 			<div class="username">
 				<label for="username">Letterboxd username</label>
 				<input type="text"
-					v-bind:value="username" 
-					placeholder="ex: holopollock" 
 					id="username" 
-					name="username"
+					name="u"
+					placeholder="ex: holopollock"
+					:value="username"
+					@change="username = $event.target.value"
+					v-on:blur="changeUsername($event.target.value)"
+					v-on:keyup.enter="changeUsername($event.target.value)"
 					required
 				>
 			</div>
 
 			<div>
 				<label for="year">Year</label>
-				<select id="year">
-					<option v-for="yearOption in range(currentYear, 2011)"
-						:key="yearOption"
-						:value="yearOption"
-						:selected="yearOption == year"
+				<select id="year" @change="changeYear($event.target.value)">
+					<option v-for="year in range(currentYear, 2011)"
+						:key="year"
+						:value="year"
+						:selected="year == currentYear"
 					>
-						{{ yearOption }}
+						{{ year }}
 					</option>
 				</select>
 			</div>
@@ -31,17 +34,20 @@
 </template>
 
 <script setup>
-	import { defineProps } from 'vue'
-
+	import { defineProps, ref } from 'vue'
+	
+	const currentYear = new Date().getFullYear()
 	const props = defineProps({
-		username: String,
-		year: {
-			type: Number,
-			default: new Date().getFullYear()
-		}
+		changeUsername: Function,
+		changeYear: Function
 	})
 
-	const currentYear = new Date().getFullYear()
+	const urlParams = new URLSearchParams(window.location.search)
+	const username = ref(urlParams.get("u"))
+
+	if (username.value != null) {
+		props.changeUsername(username.value)
+	}
 
 	const range = (start, end) => {
 		const isReverse = (start > end)
