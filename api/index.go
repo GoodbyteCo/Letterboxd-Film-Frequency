@@ -28,12 +28,16 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query() //Get URL Params(type map)
 	user, ok := query["user"]
 	if !ok || len(user) == 0 {
-		http.Error(w, "no users", 400)
+		http.Error(w, "no users", http.StatusBadRequest)
 		return
 	}
 	log.Println(user)
 
 	userData := scrapeMain(user[0])
+	if len(userData.Data) == 0 {
+		http.Error(w, "user or diary not found", http.StatusNotFound)
+		return
+	}
 	js, err := json.Marshal(userData)
 	if err != nil {
 		http.Error(w, "internal error", 500)
@@ -46,7 +50,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 func scrapeMain(user string) data {
 	store := map[string]map[string]int{}
 	ch := make(chan string)
-	go scrape("https://letterboxd.com/"+ user +"/films/diary/", ch)
+	go scrape("https://letterboxd.com/"+user+"/films/diary/", ch)
 
 	for elem := range ch {
 		yearDate := strings.SplitAfterN(elem, "/", 2)
@@ -54,7 +58,19 @@ func scrapeMain(user string) data {
 			store[yearDate[0][:4]] = make(map[string]int)
 		}
 		inner := store[yearDate[0][:4]]
-		inner[yearDate[1]] += 1
+		var date string
+		if yearDate[1][0] == '0' {
+			date += string(yearDate[1][1])
+		} else {
+			date += yearDate[1][:2]
+		}
+		date += "/"
+		if yearDate[1][3] == '0' {
+			date += string(yearDate[1][4])
+		} else {
+			date += yearDate[1][3:5]
+		}
+		inner[date] += 1
 
 	}
 	return data{Data: store}
@@ -74,7 +90,7 @@ func scrape(url string, ch chan string) {
 	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: 1000})
 	c.OnHTML("td.td-day.diary-day.center", func(e *colly.HTMLElement) {
 		wg.Add(1)
-		run := func() {	
+		run := func() {
 			dateUrl := e.ChildAttr("a[href]", "href")
 			match := re.FindStringSubmatch(dateUrl)
 			ch <- match[1]
