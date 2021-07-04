@@ -3,7 +3,7 @@
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 317 41" aria-labelledby="" class="graph">
 			<rect v-for="day in daysInTheYear(year)" 
 				:key="day" 
-				:transform="'translate('+((getWeekNumber(year, day) - 1) * 6)+' '+(getWeekDay(year, day) * 6)+')'" 
+				:transform="'translate('+((getWeekNumber(year, day)) * 6)+' '+(getWeekDay(year, day) * 6)+')'" 
 				:fill="'var(--accent-'+Math.ceil(filmsWatchedOn(year, day) / scale)+')'"
 				v-tippy="{ content: '<b>'+filmsWatchedOn(year, day)+' film(s)</b> watched on '+getDate(year, day).toLocaleDateString() }"
 				width="5" height="5"
@@ -41,7 +41,8 @@
 	}
 
 	const getWeekNumber = (year, day) => {
-		return Math.ceil((getDate(year, 0).getDay() + day + 1) / 7)
+		let firstDay = (getWeekDay(year, 0) + 1) % 7
+		return Math.ceil((day + firstDay) / 7) - 1
 	}
 
 	const filmsWatchedOn = (year, day) => {
