@@ -44,8 +44,13 @@
 		fetch(`/api?user=${username.value}`)
 			.then(function (res) {
 
-				if (res.status != 200) {
+				if (res.status == 404) {
 					statusMessage.value = 'Error: username not found'
+					statusType.value = 'error'
+					return ""
+				}
+				else if (res.status == 500) {
+					statusMessage.value = 'Internal server error'
 					statusType.value = 'error'
 					return ""
 				}
