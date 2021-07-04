@@ -5,7 +5,7 @@
 		:lowest-year="lowestYear"
 	/>
 	<status :message="statusMessage" :type="statusType"/>
-	<graph :year="year" :films="films"/>
+	<graph :year="year" :films="films" :username="username"/>
 	<goodbyte-footer/>
 </template>
 
