@@ -43,9 +43,9 @@
 	const username = ref(urlParams.get("u"))
 	const emit = defineEmit(["changeUsername", "changeYear"])
 
-	if (username.value != null) {
-		emit("changeUsername", username.value)
-	}
+	// if (username.value != null) {
+	// 	emit("changeUsername", username.value)
+	// }
 
 	const props = defineProps({
 		lowestYear: {
