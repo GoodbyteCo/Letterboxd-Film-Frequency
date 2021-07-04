@@ -11,15 +11,15 @@
 					placeholder="ex: holopollock"
 					:value="username"
 					@change="username = $event.target.value"
-					v-on:blur="changeUsername($event.target.value)"
-					v-on:keyup.enter="changeUsername($event.target.value)"
+					v-on:blur="username = $event.target.value" 
+					v-on:keyup.enter="username = $event.target.value"
 					required
 				>
 			</div>
 
 			<div>
 				<label for="year">Year</label>
-				<select id="year" @change="changeYear($event.target.value); selectedYear = $event.target.value">
+				<select id="year" @change="selectedYear = $event.target.value">
 					<option v-for="year in range(currentYear, lowestYear)"
 						:key="year"
 						:value="year"
@@ -34,29 +34,30 @@
 </template>
 
 <script setup>
-	import { ref } from 'vue'
+	import { ref, watch } from 'vue'
 	
 	const currentYear = new Date().getFullYear()
 	const selectedYear = ref(currentYear)
+	const emit = defineEmit(["changeUsername", "changeYear"])
+
+	const urlParams = new URLSearchParams(window.location.search)
+	const username = ref(urlParams.get("u"))
+
+	if (username.value != null) {
+		emit("changeUsername", username.value)
+	}
+
 	const props = defineProps({
-		changeUsername: Function,
-		changeYear: Function,
 		lowestYear: {
 			type: Number,
 			default: 2011
 		}
 	})
 
-	const urlParams = new URLSearchParams(window.location.search)
-	const username = ref(urlParams.get("u"))
-
-	if (username.value != null) {
-		props.changeUsername(username.value)
-	}
-
 	const range = (start, end) => {
 		if (selectedYear.value < end) {
-			props.changeYear(currentYear)
+			selectedYear.value = currentYear
+			emit("changeYear", selectedYear)
 		}
 		const targetLength = (start - end) + 1
 		const arr = new Array(targetLength)
@@ -64,6 +65,17 @@
 		const result = b.map((discard, n) => n + end)
 		return result.reverse()
 	}
+
+	watch(username, (user, prevUser) => {
+		if (user != prevUser) {
+			emit("changeUsername", user)
+		}
+	})
+	watch(selectedYear, (year, prevYear) => {
+		if (year != prevYear) {
+			emit("changeYear", year)
+		}
+	})
 </script>
 
 <style scoped>
