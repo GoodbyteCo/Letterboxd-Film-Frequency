@@ -49,9 +49,9 @@
 
 	const getWeekNumber = (year, day) => {
 		// TODO: figure out why this is
-		// if (getDate(year, 0).getDay() == 6) {
-		// 	return Math.ceil((getDate(year, 0).getDay() + day + 1) / 7) - 2
-		// }
+		if (getDate(year, 0).getDay() == 6) {
+			return Math.ceil((getDate(year, 0).getDay() + day + 1) / 7) - 2
+		}
 		return Math.ceil((getDate(year, 0).getDay() + day + 1) / 7) - 1
 	}
 
