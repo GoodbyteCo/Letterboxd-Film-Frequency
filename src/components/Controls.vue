@@ -55,7 +55,7 @@
 
 	const range = (start, end) => {
 		if (start < end) {
-			changeYear(currentYear)
+			props.changeYear(currentYear)
 		}
 		const targetLength = (start - end) + 1
 		const arr = new Array(targetLength)
