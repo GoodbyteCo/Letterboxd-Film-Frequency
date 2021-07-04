@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-	import { defineProps, ref } from 'vue'
+	import { ref } from 'vue'
 	
 	const currentYear = new Date().getFullYear()
 	const props = defineProps({
