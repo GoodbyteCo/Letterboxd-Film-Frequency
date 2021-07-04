@@ -20,7 +20,7 @@
 			<div>
 				<label for="year">Year</label>
 				<select id="year" @change="changeYear($event.target.value)">
-					<option v-for="year in range(currentYear, 2011)"
+					<option v-for="year in range(currentYear, lowestYear)"
 						:key="year"
 						:value="year"
 						:selected="year == currentYear"
@@ -39,7 +39,11 @@
 	const currentYear = new Date().getFullYear()
 	const props = defineProps({
 		changeUsername: Function,
-		changeYear: Function
+		changeYear: Function,
+		lowestYear: {
+			type: Number,
+			default: 2011
+		}
 	})
 
 	const urlParams = new URLSearchParams(window.location.search)

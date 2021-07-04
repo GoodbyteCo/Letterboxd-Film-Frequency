@@ -2,6 +2,7 @@
 	<controls 
 		:change-username="(u) => updateUsername(u)"
 		:change-year="(y) => updateYear(y)"
+		:lowest-year="lowestYear"
 	/>
 	<status :message="statusMessage" :type="statusType"/>
 	<graph :year="year" :films="films"/>
