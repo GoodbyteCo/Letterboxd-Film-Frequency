@@ -2,6 +2,7 @@
 	<controls 
 		:change-username="(u) => updateUsername(u)"
 		:change-year="(y) => updateYear(y)"
+		:lowest-year="lowestYear"
 	/>
 	<status :message="statusMessage" :type="statusType"/>
 	<graph :year="year" :films="films"/>
@@ -17,6 +18,7 @@
 
 	const username = ref('')
 	const year = ref(new Date().getFullYear())
+	const lowestYear = ref(2011) // default to Letterboxd create date
 	const films = ref({})
 
 	const statusMessage = ref('Enter your Letterboxd username to get data.')
@@ -64,6 +66,7 @@
 			.then(function(json) {
 				console.log(json.data)
 				films.value = json.data
+				lowestYear.value = Math.min(...Object.keys(json.data))
 			})
 	}
 

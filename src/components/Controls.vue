@@ -19,8 +19,8 @@
 
 			<div>
 				<label for="year">Year</label>
-				<select id="year" @change="changeYear($event.target.value)">
-					<option v-for="year in range(currentYear, 2011)"
+				<select id="year" @change="changeYear($event.target.value); selectedYear = $event.target.value">
+					<option v-for="year in range(currentYear, lowestYear)"
 						:key="year"
 						:value="year"
 						:selected="year == currentYear"
@@ -37,9 +37,14 @@
 	import { ref } from 'vue'
 	
 	const currentYear = new Date().getFullYear()
+	const selectedYear = ref(currentYear)
 	const props = defineProps({
 		changeUsername: Function,
-		changeYear: Function
+		changeYear: Function,
+		lowestYear: {
+			type: Number,
+			default: 2011
+		}
 	})
 
 	const urlParams = new URLSearchParams(window.location.search)
@@ -50,15 +55,14 @@
 	}
 
 	const range = (start, end) => {
-		const isReverse = (start > end)
-		const targetLength = isReverse ? (start - end) + 1 : (end - start ) + 1
+		if (selectedYear.value < end) {
+			props.changeYear(currentYear)
+		}
+		const targetLength = (start - end) + 1
 		const arr = new Array(targetLength)
 		const b = Array.apply(null, arr)
-		const result = b.map((discard, n) => {
-			return (isReverse) ? n + end : n + start
-		})
-
-		return (isReverse) ? result.reverse() : result
+		const result = b.map((discard, n) => n + end)
+		return result.reverse()
 	}
 </script>
 
