@@ -1,13 +1,30 @@
 <template>
 	<div>
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 317 41" aria-labelledby="" class="graph">
-			<rect v-for="day in daysInTheYear(year)" 
-				:key="day" 
-				:transform="'translate('+((getWeekNumber(year, day)) * 6)+' '+(getWeekDay(year, day) * 6)+')'" 
-				:fill="'var(--accent-'+Math.ceil(filmsWatchedOn(year, day) / scale)+')'"
-				v-tippy="{ content: '<b>'+filmsWatchedOn(year, day)+' film(s)</b> watched on '+getDate(year, day).toLocaleDateString() }"
-				width="5" height="5"
-			/>
+			<template v-if="username != ''">
+				<a v-for="day in daysInTheYear(year)"
+					:key="day"
+					:href="getLink(year, day)"
+					target="_blank"
+					rel="noreferrer noopener"
+				>
+					<rect  
+						:transform="'translate('+((getWeekNumber(year, day)) * 6)+' '+(getWeekDay(year, day) * 6)+')'" 
+						:fill="'var(--accent-'+Math.ceil(filmsWatchedOn(year, day) / scale)+')'"
+						v-tippy="{ content: '<b>'+filmsWatchedOn(year, day)+' film(s)</b> watched on '+getDate(year, day).toLocaleDateString() }"
+						width="5" height="5"
+					/>
+				</a>
+			</template>
+			<template v-else>
+				<rect v-for="day in daysInTheYear(year)"
+					:key="day"
+					:transform="'translate('+((getWeekNumber(year, day)) * 6)+' '+(getWeekDay(year, day) * 6)+')'" 
+					:fill="'var(--accent-'+Math.ceil(filmsWatchedOn(year, day) / scale)+')'"
+					v-tippy="{ content: '<b>'+filmsWatchedOn(year, day)+' film(s)</b> watched on '+getDate(year, day).toLocaleDateString() }"
+					width="5" height="5"
+				/>
+			</template>
 		</svg>
 	</div>
 	<p id="scroll-prompt">
@@ -24,7 +41,8 @@
 
 	const props = defineProps({
 		year: Number,
-		films: Object
+		films: Object,
+		username: String
 	})
 
 	// scale increment = 1/5th the maximum watched in any one day
@@ -68,6 +86,11 @@
 		var isLeapYear = (new Date(year, 1, 29).getDate() === 29)
 		return isLeapYear ? 366 : 365
 	}
+
+	const getLink = (year, day) => {
+		const date = getDate(year, day);
+		return `https://letterboxd.com/${props.username}/films/diary/for/${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getDate()).toString().padStart(2, '0')}/`
+	}
 </script>
 
 <style scoped>
@@ -78,8 +101,8 @@
 		box-sizing: border-box;
 		padding: 0 var(--space) var(--space);
 	}
-
-	svg.graph rect
+	
+	svg.graph a, svg.graph rect
 	{
 		outline: none;
 	}
@@ -88,6 +111,14 @@
 	{
 		width: 100%;
 		overflow: scroll;
+
+		-ms-overflow-style: none;  /* IE and Edge */
+		scrollbar-width: none;  /* Firefox */
+	}
+
+	/* Chrome, Safari and Opera */
+	div::-webkit-scrollbar {
+		display: none;
 	}
 
 	div::before, div::after
