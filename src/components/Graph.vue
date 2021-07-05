@@ -117,7 +117,8 @@
 	}
 
 	/* Chrome, Safari and Opera */
-	div::-webkit-scrollbar {
+	div::-webkit-scrollbar
+	{
 		display: none;
 	}
 
