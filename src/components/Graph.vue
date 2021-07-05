@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 317 41" aria-labelledby="" class="graph">
+			<template v-if="username != ''">
 				<a v-for="day in daysInTheYear(year)"
 					:key="day"
 					:href="getLink(year, day)"
@@ -14,6 +15,16 @@
 						width="5" height="5"
 					/>
 				</a>
+			</template>
+			<template v-else>
+				<rect v-for="day in daysInTheYear(year)"
+					:key="day"
+					:transform="'translate('+((getWeekNumber(year, day)) * 6)+' '+(getWeekDay(year, day) * 6)+')'" 
+					:fill="'var(--accent-'+Math.ceil(filmsWatchedOn(year, day) / scale)+')'"
+					v-tippy="{ content: '<b>'+filmsWatchedOn(year, day)+' film(s)</b> watched on '+getDate(year, day).toLocaleDateString() }"
+					width="5" height="5"
+				/>
+			</template>
 		</svg>
 	</div>
 	<p id="scroll-prompt">
@@ -78,9 +89,7 @@
 
 	const getLink = (year, day) => {
 		const date = getDate(year, day);
-		return props.username != "" ? `https://letterboxd.com/${props.username}/films/diary/for/${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getDate()).toString().padStart(2, '0')}/` : ""
-
-
+		return `https://letterboxd.com/${props.username}/films/diary/for/${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getDate()).toString().padStart(2, '0')}/`
 	}
 </script>
 
