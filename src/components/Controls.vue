@@ -38,7 +38,7 @@
 	
 	const currentYear = new Date().getFullYear()
 	const selectedYear = ref(currentYear)
-	const emit = defineEmit(["changeUsername", "changeYear"])
+	const emit = defineEmits(["changeUsername", "changeYear"])
 
 	const urlParams = new URLSearchParams(window.location.search)
 	const username = ref(urlParams.get("u"))
