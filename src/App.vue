@@ -9,7 +9,7 @@
 	<goodbyte-footer/>
 </template>
 
-<script setup>
+<script setup lang="ts">
 	import { ref, watch } from 'vue'
 	import Controls from './components/Controls.vue'
 	import Status from './components/Status.vue'

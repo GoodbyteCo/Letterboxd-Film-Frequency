@@ -33,7 +33,7 @@
 	</form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 	import { ref, watch } from 'vue'
 	
 	const currentYear = new Date().getFullYear()
@@ -62,7 +62,7 @@
 		const targetLength = (start - end) + 1
 		const arr = new Array(targetLength)
 		const b = Array.apply(null, arr)
-		const result = b.map((discard, n) => n + end)
+		const result = b.map((_, n) => n + end)
 		return result.reverse()
 	}
 
