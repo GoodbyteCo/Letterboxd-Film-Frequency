@@ -21,7 +21,7 @@
 					:key="day"
 					:transform="'translate('+((getWeekNumber(year, day)) * 6)+' '+(getWeekDay(year, day) * 6)+')'" 
 					:fill="'var(--accent-'+Math.ceil(filmsWatchedOn(year, day) / scale)+')'"
-					v-tippy="{ content: '<b>'+filmsWatchedOn(year, day)+' film(s)</b> watched on '+getDate(year, day).toLocaleDateString() }"
+					v-tippy="{ content: '<b>'+filmsWatchedOn(year, day)+' film'+(filmsWatchedOn(year, day) == 1 ? '' : 's')+'</b> watched on '+getDate(year, day).toLocaleDateString() }"
 					width="5" height="5"
 				/>
 			</template>
