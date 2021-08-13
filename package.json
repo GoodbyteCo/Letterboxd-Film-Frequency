@@ -11,11 +11,8 @@
 		"core-js": "^3.6.5",
 		"glob-parent": "5.1.2",
 		"vite": "^2.3.8",
-		"vue": "^3.0.0",
+		"vue": "^3.2.2",
 		"vue-tippy": "^6.0.0-alpha.30"
-	},
-	"devDependencies": {
-		"@vue/compiler-sfc": "^3.0.0"
 	},
 	"browserslist": [
 		"> 1%",
