@@ -14,10 +14,10 @@ Film Frequency is written in Vue (front-end) and Go (back-end), and hosted on Ve
 Clone the repo and install its dependencies:
 
 ```bash
-yarn install
+npm install
 ```
 
 Run locally:
 ```bash
-yarn serve
+npm run serve
 ```
