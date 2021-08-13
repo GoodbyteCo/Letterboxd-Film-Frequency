@@ -12,7 +12,7 @@
 		"glob-parent": "6.0.1",
 		"vite": "^2.4.4",
 		"vue": "^3.2.2",
-		"vue-tippy": "^6.0.0-alpha.30"
+		"vue-tippy": "^6.0.0-alpha.32"
 	},
 	"browserslist": [
 		"> 1%",
