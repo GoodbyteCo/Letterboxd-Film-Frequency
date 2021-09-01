@@ -10,7 +10,7 @@
 		"@vitejs/plugin-vue": "^1.6.0",
 		"core-js": "^3.16.4",
 		"glob-parent": "6.0.1",
-		"vite": "^2.5.1",
+		"vite": "^2.5.2",
 		"vue": "^3.2.6",
 		"vue-tippy": "^6.0.0-alpha.32"
 	},
