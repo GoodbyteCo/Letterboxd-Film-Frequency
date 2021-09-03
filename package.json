@@ -8,7 +8,7 @@
 	},
 	"dependencies": {
 		"@vitejs/plugin-vue": "^1.6.0",
-		"core-js": "^3.17.1",
+		"core-js": "^3.17.2",
 		"glob-parent": "6.0.1",
 		"vite": "^2.5.3",
 		"vue": "^3.2.7",
