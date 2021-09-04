@@ -11,13 +11,13 @@ the site to work, and that only _logged_ movies are counted towards the graph.
 
 Film Frequency is written in Vue (frontend) and Go (backend), and hosted on Vercel.
 
-Clone the repo and install its dependencies:
+**Clone the repo and install its dependencies:**
 
 ```bash
 npm install
 ```
 
-Run locally:
+**Run locally:**
 ```bash
 npm run serve
 ```
