@@ -11,7 +11,7 @@
 		"core-js": "^3.18.0",
 		"glob-parent": "6.0.1",
 		"vite": "^2.5.3",
-		"vue": "^3.2.13",
+		"vue": "^3.2.16",
 		"vue-tippy": "^6.0.0-alpha.32"
 	},
 	"browserslist": [
