@@ -41,7 +41,7 @@
 
 	interface Props {
 		year: number,
-		films: Record<string, Record<string, string>>,
+		films: Record<string, Record<string, number>>,
 		username: string
 	}
 	const props = defineProps<Props>()
@@ -50,7 +50,7 @@
 	// or if object is undefined, scale increment = 1
 	const scale = computed(() => {
 		try {
-			return Math.max(...Object.values(props.films[props.year] || { 'default': 5 })) / 5
+			return Math.max(...Object.values<number>(props.films[props.year] || { 'default': 5 })) / 5
 		}
 		catch (e) {
 			return 1

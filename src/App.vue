@@ -34,13 +34,13 @@
 		if (username.trim().length <= 0) {
 			statusMessage.value = 'Enter your Letterboxd username to get data.'
 			statusType.value = ''
-			window.history.replaceState(null, null, '/') // clear url params
+			window.history.replaceState(null, "", '/') // clear url params
 			return
 		}
 
 		statusMessage.value = 'Loading...'
 		statusType.value = 'info'
-		window.history.replaceState(null, null, '?u=' + username);
+		window.history.replaceState(null, "", '?u=' + username);
 
 		fetch(`/api?user=${username}`)
 			.then(function (res) {
