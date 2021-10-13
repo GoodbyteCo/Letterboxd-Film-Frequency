@@ -4,11 +4,9 @@
 	</div>
 </template>
 
-<script setup>
-	const props = defineProps({
-		type: String,
-		message: String
-	})
+<script setup lang="ts">
+	interface StatusProps { type: string; message: string; }
+	const props = defineProps<StatusProps>()
 </script>
 
 <style scoped>
