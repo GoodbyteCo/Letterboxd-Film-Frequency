@@ -47,11 +47,11 @@
 		emit("changeUsername", username.value)
 	}
 
-	interface Props {
-		lowestYear: number
+	type ControlsProps = {
+		lowestYear?: number
 	}
-	
-	const props = withDefaults(defineProps<Props>() ,{
+
+	const props = withDefaults(defineProps<ControlsProps>() ,{
 		lowestYear: 2011
 	})
 

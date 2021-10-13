@@ -39,12 +39,12 @@
 	import { computed } from 'vue'
 	import { directive } from 'vue-tippy'
 
-	interface Props {
+	type GraphProps = {
 		year: number,
 		films: Record<string, Record<string, number>>,
 		username: string
 	}
-	const props = defineProps<Props>()
+	const props = defineProps<GraphProps>()
 
 	// scale increment = 1/5th the maximum watched in any one day
 	// or if object is undefined, scale increment = 1

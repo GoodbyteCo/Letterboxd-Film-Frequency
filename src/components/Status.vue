@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-	interface StatusProps { type: string; message: string; }
+	type StatusProps = { type: string; message: string; }
 	const props = defineProps<StatusProps>()
 </script>
 
