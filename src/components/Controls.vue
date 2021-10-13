@@ -19,7 +19,7 @@
 
 			<div>
 				<label for="year">Year</label>
-				<select id="year" @change="selectedYear = +($event.target as HTMLInputElement).value">
+				<select id="year" @change="selectedYear = +($event.target as HTMLSelectElement).value">
 					<option v-for="year in range(currentYear, lowestYear)"
 						:key="year"
 						:value="year"
