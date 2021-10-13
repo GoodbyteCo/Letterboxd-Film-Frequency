@@ -1,7 +1,7 @@
 <template>
 	<controls 
 		v-on:changeUsername="username = $event"
-		v-on:changeYear="year = parseInt($event)"
+		v-on:changeYear="year = +$event"
 		:lowest-year="lowestYear"
 	/>
 	<status :message="statusMessage" :type="statusType"/>

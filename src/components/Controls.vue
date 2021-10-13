@@ -38,7 +38,8 @@
 	
 	const currentYear = new Date().getFullYear()
 	const selectedYear = ref(currentYear)
-	const emit = defineEmits(["changeUsername", "changeYear"])
+	const emit = defineEmits<{(event: 'changeUsername', value: string): void, (event: 'changeYear', value: number): void}>()
+
 
 	const urlParams = new URLSearchParams(window.location.search)
 	const username = ref(urlParams.get("u"))
@@ -58,7 +59,7 @@
 	const range = (start: number, end: number) => {
 		if (selectedYear.value < end) {
 			selectedYear.value = currentYear
-			emit("changeYear", selectedYear)
+			emit("changeYear", selectedYear.value)
 		}
 		const targetLength = (start - end) + 1
 		const arr = new Array<number | undefined>(targetLength)
@@ -68,7 +69,7 @@
 	}
 
 	watch(username, (user, prevUser) => {
-		if (user != prevUser) {
+		if (user != prevUser && user != null) {
 			emit("changeUsername", user)
 		}
 	})
