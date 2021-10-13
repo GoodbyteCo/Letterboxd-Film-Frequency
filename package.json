@@ -7,12 +7,12 @@
 		"build": "vite build"
 	},
 	"dependencies": {
-		"@vitejs/plugin-vue": "^1.8.1",
-		"core-js": "^3.18.0",
-		"glob-parent": "6.0.1",
-		"vite": "^2.5.3",
-		"vue": "^3.2.13",
-		"vue-tippy": "^6.0.0-alpha.32"
+		"@vitejs/plugin-vue": "^1.9.3",
+		"core-js": "^3.18.3",
+		"glob-parent": "6.0.2",
+		"vite": "^2.6.7",
+		"vue": "^3.2.20",
+		"vue-tippy": "^6.0.0-alpha.34"
 	},
 	"browserslist": [
 		"> 1%",
