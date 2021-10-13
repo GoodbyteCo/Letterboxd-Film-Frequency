@@ -10,16 +10,16 @@
 					name="u"
 					placeholder="ex: holopollock"
 					:value="username"
-					@change="username = $event.target.value"
-					v-on:blur="username = $event.target.value" 
-					v-on:keyup.enter="username = $event.target.value"
+					@change="username = ($event.target as HTMLInputElement).value"
+					v-on:blur="username = ($event.target as HTMLInputElement).value" 
+					v-on:keyup.enter="username = ($event.target as HTMLInputElement).value"
 					required
 				>
 			</div>
 
 			<div>
 				<label for="year">Year</label>
-				<select id="year" @change="selectedYear = $event.target.value">
+				<select id="year" @change="selectedYear = +($event.target as HTMLInputElement).value">
 					<option v-for="year in range(currentYear, lowestYear)"
 						:key="year"
 						:value="year"
@@ -33,7 +33,7 @@
 	</form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 	import { ref, watch } from 'vue'
 	
 	const currentYear = new Date().getFullYear()
@@ -47,22 +47,23 @@
 		emit("changeUsername", username.value)
 	}
 
-	const props = defineProps({
-		lowestYear: {
-			type: Number,
-			default: 2011
-		}
+	interface Props {
+		lowestYear: number
+	}
+	
+	const props = withDefaults(defineProps<Props>() ,{
+		lowestYear: 2011
 	})
 
-	const range = (start, end) => {
+	const range = (start: number, end: number) => {
 		if (selectedYear.value < end) {
 			selectedYear.value = currentYear
 			emit("changeYear", selectedYear)
 		}
 		const targetLength = (start - end) + 1
-		const arr = new Array(targetLength)
-		const b = Array.apply(null, arr)
-		const result = b.map((discard, n) => n + end)
+		const arr = new Array<number | undefined>(targetLength)
+		// const b = Array.apply(undefined, arr)
+		const result = arr.map((_discard: unknown, n: number) => n + end)
 		return result.reverse()
 	}
 

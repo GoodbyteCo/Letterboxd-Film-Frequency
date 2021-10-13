@@ -35,15 +35,16 @@
 	</p>
 </template>
 
-<script setup>
+<script setup lang="ts">
 	import { computed } from 'vue'
 	import { directive } from 'vue-tippy'
 
-	const props = defineProps({
-		year: Number,
-		films: Object,
-		username: String
-	})
+	interface Props {
+		year: number,
+		films: Record<string, Record<string, string>>,
+		username: string
+	}
+	const props = defineProps<Props>()
 
 	// scale increment = 1/5th the maximum watched in any one day
 	// or if object is undefined, scale increment = 1
@@ -56,38 +57,38 @@
 		}
 	})
 
-	const getDate = (year, day) => {
+	const getDate = (year: number, day: number) => {
 		var date = new Date(year, 0)
 		return new Date(date.setDate(day))
 	}
 
-	const getWeekDay = (year, day) => {
+	const getWeekDay = (year: number, day: number) => {
 		return getDate(year, day).getDay()
 	}
 
-	const getWeekNumber = (year, day) => {
+	const getWeekNumber = (year:number, day:number) => {
 		let firstDay = (getWeekDay(year, 0) + 1) % 7
 		return Math.ceil((day + firstDay) / 7) - 1
 	}
 
-	const filmsWatchedOn = (year, day) => {
+	const filmsWatchedOn = (year: number, day: number) => {
 		var date = getDate(year, day);
 		var formattedDate = (date.getMonth() + 1) + '/' + date.getDate()
 		
 		try {
-			return props.films[year][formattedDate] || 0
+			return +props.films[year][formattedDate] || 0
 		}
 		catch (e) {
 			return 0
 		}
 	}
 
-	const daysInTheYear = (year) => {
+	const daysInTheYear = (year: number) => {
 		var isLeapYear = (new Date(year, 1, 29).getDate() === 29)
 		return isLeapYear ? 366 : 365
 	}
 
-	const getLink = (year, day) => {
+	const getLink = (year: number, day:number) => {
 		const date = getDate(year, day);
 		return `https://letterboxd.com/${props.username}/films/diary/for/${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getDate()).toString().padStart(2, '0')}/`
 	}

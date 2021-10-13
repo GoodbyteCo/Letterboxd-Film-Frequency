@@ -9,7 +9,7 @@
 	<goodbyte-footer/>
 </template>
 
-<script setup>
+<script setup lang="ts">
 	import { ref, watch } from 'vue'
 	import Controls from './components/Controls.vue'
 	import Status from './components/Status.vue'
@@ -29,7 +29,7 @@
 		updateGraph(newUsername)
 	})
 
-	const updateGraph = (username) => {
+	const updateGraph = (username: string) => {
 
 		if (username.trim().length <= 0) {
 			statusMessage.value = 'Enter your Letterboxd username to get data.'
@@ -65,7 +65,8 @@
 			.then(function(json) {
 				console.log(json.data)
 				films.value = json.data
-				lowestYear.value = Math.min(...Object.keys(json.data))
+				const keyVals = Object.keys(json.data).map<number>(value => +value)
+				lowestYear.value = Math.min(...keyVals)
 			})
 	}
 
