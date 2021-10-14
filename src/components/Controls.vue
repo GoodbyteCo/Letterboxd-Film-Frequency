@@ -78,7 +78,6 @@
 	const range = (start: number, end: number) => {
 		if (selectedYear.value < end) {
 			selectedYear.value = currentYear
-			emit("changeYear", selectedYear.value)
 		}
 		const targetLength = (start - end) + 1
 		const arr = new Array<number | undefined>(targetLength)
