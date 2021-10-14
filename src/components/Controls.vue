@@ -35,24 +35,26 @@
 
 <script setup lang="ts">
 	import { ref, watch } from 'vue'
-	import { ControlsProps } from '../types/props'
-	import { ControlEmits } from '../types/emits'
-
-	const props = withDefaults(defineProps<ControlsProps>(), {
-		lowestYear: 2011
-	})
-
-	const emit = defineEmits<ControlEmits>()
-
-	const urlParams = new URLSearchParams(window.location.search)
 	
 	const currentYear = new Date().getFullYear()
 	const selectedYear = ref(currentYear)
+	const emit = defineEmits<{(event: 'changeUsername', value: string): void, (event: 'changeYear', value: number): void}>()
+
+
+	const urlParams = new URLSearchParams(window.location.search)
 	const username = ref(urlParams.get("u"))
 
 	if (username.value != null) {
 		emit("changeUsername", username.value)
 	}
+
+	type ControlsProps = {
+		lowestYear?: number
+	}
+
+	const props = withDefaults(defineProps<ControlsProps>() ,{
+		lowestYear: 2011
+	})
 
 	const range = (start: number, end: number) => {
 		if (selectedYear.value < end) {
