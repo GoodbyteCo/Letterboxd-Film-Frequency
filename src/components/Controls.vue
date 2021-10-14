@@ -35,27 +35,46 @@
 
 <script setup lang="ts">
 	import { ref, watch } from 'vue'
-	
-	const currentYear = new Date().getFullYear()
-	const selectedYear = ref(currentYear)
-	const emit = defineEmits<{(event: 'changeUsername', value: string): void, (event: 'changeYear', value: number): void}>()
 
-
-	const urlParams = new URLSearchParams(window.location.search)
-	const username = ref(urlParams.get("u"))
-
-	if (username.value != null) {
-		emit("changeUsername", username.value)
-	}
-
+	// Cant move to own file see: https://github.com/vuejs/vue-next/issues/4294
 	type ControlsProps = {
 		lowestYear?: number
 	}
-
 	const props = withDefaults(defineProps<ControlsProps>() ,{
 		lowestYear: 2011
 	})
 
+	// Cant move to own file see: https://github.com/vuejs/vue-next/issues/4294
+	type ControlEmit = {
+		(event: 'changeUsername', value: string): void,
+		(event: 'changeYear', value: number): void
+	}
+	const emit = defineEmits<ControlEmit>()
+	
+	// Data
+	const urlParams = new URLSearchParams(window.location.search)
+	const currentYear = new Date().getFullYear()
+	const username = ref(urlParams.get("u"))
+	const selectedYear = ref(currentYear)
+
+	// On Run
+	if (username.value != null) {
+		emit("changeUsername", username.value)
+	}
+
+	// Watchers
+	watch(username, (user, prevUser) => {
+		if (user != prevUser && user != null) {
+			emit("changeUsername", user)
+		}
+	})
+	watch(selectedYear, (year, prevYear) => {
+		if (year != prevYear) {
+			emit("changeYear", year)
+		}
+	})
+
+	// Helpers
 	const range = (start: number, end: number) => {
 		if (selectedYear.value < end) {
 			selectedYear.value = currentYear
@@ -67,17 +86,6 @@
 		const result = arr.map((_discard: unknown, n: number) => n + end)
 		return result.reverse()
 	}
-
-	watch(username, (user, prevUser) => {
-		if (user != prevUser && user != null) {
-			emit("changeUsername", user)
-		}
-	})
-	watch(selectedYear, (year, prevYear) => {
-		if (year != prevYear) {
-			emit("changeYear", year)
-		}
-	})
 </script>
 
 <style scoped>

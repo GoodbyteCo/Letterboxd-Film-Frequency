@@ -16,11 +16,11 @@
 	import Graph from './components/Graph.vue'
 	import GoodbyteFooter from './components/Footer.vue'
 
+	// Data
 	const username = ref('')
 	const year = ref(new Date().getFullYear())
 	const lowestYear = ref(2011) // default to Letterboxd create date
 	const films = ref({})
-
 	const statusMessage = ref('Enter your Letterboxd username to get data.')
 	const statusType = ref('') // 'error', 'info', or empty
 
