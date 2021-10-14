@@ -82,8 +82,8 @@
 		}
 		const targetLength = (start - end) + 1
 		const arr = new Array<number | undefined>(targetLength)
-		// const b = Array.apply(undefined, arr)
-		const result = arr.map((_discard: unknown, n: number) => n + end)
+		const empty = Array.apply(undefined, arr)
+		const result = empty.map((_discard: unknown, n: number) => n + end)
 		return result.reverse()
 	}
 </script>
