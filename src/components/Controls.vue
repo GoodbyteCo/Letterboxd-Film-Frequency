@@ -38,7 +38,7 @@
 	import { ControlsProps } from '../types/props'
 	import { ControlEmits } from '../types/emits'
 
-	const props = withDefaults(defineProps<ControlsProps>() ,{
+	const props = withDefaults(defineProps<ControlsProps>(), {
 		lowestYear: 2011
 	})
 
