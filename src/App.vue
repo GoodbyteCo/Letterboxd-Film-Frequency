@@ -20,10 +20,9 @@
 	const username = ref('')
 	const year = ref(new Date().getFullYear())
 	const lowestYear = ref(2011) // default to Letterboxd create date
-	const films = ref({})
+	const films = ref<Record<string, Record<string, number>>>({})
 	const statusMessage = ref('Enter your Letterboxd username to get data.')
 	const statusType = ref('') // 'error', 'info', or empty
-
 
 	watch(username, (newUsername) => {
 		updateGraph(newUsername)
@@ -65,8 +64,8 @@
 			.then(function(json) {
 				console.log(json.data)
 				films.value = json.data
-				const keyVals = Object.keys(json.data).map<number>(value => +value)
-				lowestYear.value = Math.min(...keyVals)
+				const years = Object.keys(json.data).map<number>(value => +value)
+				lowestYear.value = Math.min(...years)
 			})
 	}
 

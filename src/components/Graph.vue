@@ -38,7 +38,7 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
 	import { directive } from 'vue-tippy'
-	import useDates from '../composables/useDates'
+	import { getDate, getWeekDay, getWeekNumber, getDaysInTheYear } from '../utils/date'
 
 	// Cant move to own file see: https://github.com/vuejs/vue-next/issues/4294
 	type GraphProps = {
@@ -47,13 +47,6 @@
 		username: string
 	}
 	const props = defineProps<GraphProps>()
-
-	const {
-        getDate,
-        getWeekDay,
-        getWeekNumber,
-        getDaysInTheYear
-    } = useDates()
 
 	// scale increment = 1/5th the maximum watched in any one day
 	// or if object is undefined, scale increment = 1
@@ -68,8 +61,8 @@
 
 	// Helpers
 	const filmsWatchedOn = (year: number, day: number) => {
-		var date = getDate(year, day);
-		var formattedDate = (date.getMonth() + 1) + '/' + date.getDate()
+		const date = getDate(year, day);
+		const formattedDate = (date.getMonth() + 1) + '/' + date.getDate()
 		
 		try {
 			return +props.films[year][formattedDate] || 0
