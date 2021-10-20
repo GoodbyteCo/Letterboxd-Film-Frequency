@@ -10,16 +10,16 @@
 					name="u"
 					placeholder="ex: holopollock"
 					:value="username"
-					@change="username = $event.target.value"
-					v-on:blur="username = $event.target.value" 
-					v-on:keyup.enter="username = $event.target.value"
+					@change="username = ($event.target as HTMLInputElement).value"
+					v-on:blur="username = ($event.target as HTMLInputElement).value" 
+					v-on:keyup.enter="username = ($event.target as HTMLInputElement).value"
 					required
 				>
 			</div>
 
 			<div>
 				<label for="year">Year</label>
-				<select id="year" @change="selectedYear = $event.target.value">
+				<select id="year" @change="selectedYear = +($event.target as HTMLSelectElement).value">
 					<option v-for="year in range(currentYear, lowestYear)"
 						:key="year"
 						:value="year"
@@ -33,41 +33,38 @@
 	</form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 	import { ref, watch } from 'vue'
+
+	// Cant move to own file see: https://github.com/vuejs/vue-next/issues/4294
+	type ControlsProps = {
+		lowestYear?: number
+	}
+	const props = withDefaults(defineProps<ControlsProps>() ,{
+		lowestYear: 2011
+	})
+
+	// Cant move to own file see: https://github.com/vuejs/vue-next/issues/4294
+	type ControlEmit = {
+		(event: 'changeUsername', value: string): void,
+		(event: 'changeYear', value: number): void
+	}
+	const emit = defineEmits<ControlEmit>()
 	
-	const currentYear = new Date().getFullYear()
-	const selectedYear = ref(currentYear)
-	const emit = defineEmits(["changeUsername", "changeYear"])
-
+	// Data
 	const urlParams = new URLSearchParams(window.location.search)
+	const currentYear = new Date().getFullYear()
 	const username = ref(urlParams.get("u"))
+	const selectedYear = ref(currentYear)
 
+	// On Run
 	if (username.value != null) {
 		emit("changeUsername", username.value)
 	}
 
-	const props = defineProps({
-		lowestYear: {
-			type: Number,
-			default: 2011
-		}
-	})
-
-	const range = (start, end) => {
-		if (selectedYear.value < end) {
-			selectedYear.value = currentYear
-			emit("changeYear", selectedYear)
-		}
-		const targetLength = (start - end) + 1
-		const arr = new Array(targetLength)
-		const b = Array.apply(null, arr)
-		const result = b.map((discard, n) => n + end)
-		return result.reverse()
-	}
-
+	// Watchers
 	watch(username, (user, prevUser) => {
-		if (user != prevUser) {
+		if (user != prevUser && user != null) {
 			emit("changeUsername", user)
 		}
 	})
@@ -76,6 +73,18 @@
 			emit("changeYear", year)
 		}
 	})
+
+	// Helpers
+	const range = (start: number, end: number) => {
+		if (selectedYear.value < end) {
+			selectedYear.value = currentYear
+		}
+		const targetLength = (start - end) + 1
+		const arr = new Array<number | undefined>(targetLength)
+		const empty = Array.apply(undefined, arr)
+		const result = empty.map((_discard: unknown, n: number) => n + end)
+		return result.reverse()
+	}
 </script>
 
 <style scoped>

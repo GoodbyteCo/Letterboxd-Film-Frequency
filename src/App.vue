@@ -1,7 +1,7 @@
 <template>
 	<controls 
 		v-on:changeUsername="username = $event"
-		v-on:changeYear="year = parseInt($event)"
+		v-on:changeYear="year = +$event"
 		:lowest-year="lowestYear"
 	/>
 	<status :message="statusMessage" :type="statusType"/>
@@ -9,38 +9,37 @@
 	<goodbyte-footer/>
 </template>
 
-<script setup>
+<script setup lang="ts">
 	import { ref, watch } from 'vue'
 	import Controls from './components/Controls.vue'
 	import Status from './components/Status.vue'
 	import Graph from './components/Graph.vue'
 	import GoodbyteFooter from './components/Footer.vue'
 
+	// Data
 	const username = ref('')
 	const year = ref(new Date().getFullYear())
 	const lowestYear = ref(2011) // default to Letterboxd create date
-	const films = ref({})
-
+	const films = ref<Record<string, Record<string, number>>>({})
 	const statusMessage = ref('Enter your Letterboxd username to get data.')
 	const statusType = ref('') // 'error', 'info', or empty
-
 
 	watch(username, (newUsername) => {
 		updateGraph(newUsername)
 	})
 
-	const updateGraph = (username) => {
+	const updateGraph = (username: string) => {
 
 		if (username.trim().length <= 0) {
 			statusMessage.value = 'Enter your Letterboxd username to get data.'
 			statusType.value = ''
-			window.history.replaceState(null, null, '/') // clear url params
+			window.history.replaceState(null, "", '/') // clear url params
 			return
 		}
 
 		statusMessage.value = 'Loading...'
 		statusType.value = 'info'
-		window.history.replaceState(null, null, '?u=' + username);
+		window.history.replaceState(null, "", '?u=' + username);
 
 		fetch(`/api?user=${username}`)
 			.then(function (res) {
@@ -65,7 +64,8 @@
 			.then(function(json) {
 				console.log(json.data)
 				films.value = json.data
-				lowestYear.value = Math.min(...Object.keys(json.data))
+				const years = Object.keys(json.data).map<number>(value => +value)
+				lowestYear.value = Math.min(...years)
 			})
 	}
 

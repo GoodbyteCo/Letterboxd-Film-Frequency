@@ -2,7 +2,7 @@
 	<div>
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 317 41" aria-labelledby="" class="graph">
 			<template v-if="username != ''">
-				<a v-for="day in daysInTheYear(year)"
+				<a v-for="day in getDaysInTheYear(year)"
 					:key="day"
 					:href="getLink(year, day)"
 					target="_blank"
@@ -17,7 +17,7 @@
 				</a>
 			</template>
 			<template v-else>
-				<rect v-for="day in daysInTheYear(year)"
+				<rect v-for="day in getDaysInTheYear(year)"
 					:key="day"
 					:transform="'translate('+((getWeekNumber(year, day)) * 6)+' '+(getWeekDay(year, day) * 6)+')'" 
 					:fill="'var(--accent-0)'"
@@ -35,59 +35,44 @@
 	</p>
 </template>
 
-<script setup>
+<script setup lang="ts">
 	import { computed } from 'vue'
 	import { directive } from 'vue-tippy'
+	import { getDate, getWeekDay, getWeekNumber, getDaysInTheYear } from '../utils/date'
 
-	const props = defineProps({
-		year: Number,
-		films: Object,
-		username: String
-	})
+	// Cant move to own file see: https://github.com/vuejs/vue-next/issues/4294
+	type GraphProps = {
+		year: number,
+		films: Record<string, Record<string, number>>,
+		username: string
+	}
+	const props = defineProps<GraphProps>()
 
 	// scale increment = 1/5th the maximum watched in any one day
 	// or if object is undefined, scale increment = 1
 	const scale = computed(() => {
 		try {
-			return Math.max(...Object.values(props.films[props.year] || { 'default': 5 })) / 5
+			return Math.max(...Object.values<number>(props.films[props.year] || { 'default': 5 })) / 5
 		}
 		catch (e) {
 			return 1
 		}
 	})
 
-	const getDate = (year, day) => {
-		var date = new Date(year, 0)
-		return new Date(date.setDate(day))
-	}
-
-	const getWeekDay = (year, day) => {
-		return getDate(year, day).getDay()
-	}
-
-	const getWeekNumber = (year, day) => {
-		let firstDay = (getWeekDay(year, 0) + 1) % 7
-		return Math.ceil((day + firstDay) / 7) - 1
-	}
-
-	const filmsWatchedOn = (year, day) => {
-		var date = getDate(year, day);
-		var formattedDate = (date.getMonth() + 1) + '/' + date.getDate()
+	// Helpers
+	const filmsWatchedOn = (year: number, day: number) => {
+		const date = getDate(year, day);
+		const formattedDate = (date.getMonth() + 1) + '/' + date.getDate()
 		
 		try {
-			return props.films[year][formattedDate] || 0
+			return +props.films[year][formattedDate] || 0
 		}
 		catch (e) {
 			return 0
 		}
 	}
 
-	const daysInTheYear = (year) => {
-		var isLeapYear = (new Date(year, 1, 29).getDate() === 29)
-		return isLeapYear ? 366 : 365
-	}
-
-	const getLink = (year, day) => {
+	const getLink = (year: number, day:number) => {
 		const date = getDate(year, day);
 		return `https://letterboxd.com/${props.username}/films/diary/for/${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getDate()).toString().padStart(2, '0')}/`
 	}
@@ -134,22 +119,22 @@
 		width: var(--space);
 		pointer-events: none;
 		background: linear-gradient(to right,
-			rgba(25, 30, 37, 0.000) 0%,
-			rgba(25, 30, 37, 0.013) 9.6%,
-			rgba(25, 30, 37, 0.049) 18.1%,
-			rgba(25, 30, 37, 0.104) 25.6%,
-			rgba(25, 30, 37, 0.175) 32.3%,
-			rgba(25, 30, 37, 0.259) 38.4%,
-			rgba(25, 30, 37, 0.352) 44.0%,
-			rgba(25, 30, 37, 0.450) 49.3%,
-			rgba(25, 30, 37, 0.550) 54.4%,
-			rgba(25, 30, 37, 0.648) 59.6%,
-			rgba(25, 30, 37, 0.741) 65.0%,
-			rgba(25, 30, 37, 0.825) 70.6%,
-			rgba(25, 30, 37, 0.896) 76.8%,
-			rgba(25, 30, 37, 0.951) 83.7%,
-			rgba(25, 30, 37, 0.987) 91.3%,
-			rgba(25, 30, 37, 1.000) 100%);
+		rgba(25, 30, 37, 0.000) 0%,
+		rgba(25, 30, 37, 0.013) 9.6%,
+		rgba(25, 30, 37, 0.049) 18.1%,
+		rgba(25, 30, 37, 0.104) 25.6%,
+		rgba(25, 30, 37, 0.175) 32.3%,
+		rgba(25, 30, 37, 0.259) 38.4%,
+		rgba(25, 30, 37, 0.352) 44.0%,
+		rgba(25, 30, 37, 0.450) 49.3%,
+		rgba(25, 30, 37, 0.550) 54.4%,
+		rgba(25, 30, 37, 0.648) 59.6%,
+		rgba(25, 30, 37, 0.741) 65.0%,
+		rgba(25, 30, 37, 0.825) 70.6%,
+		rgba(25, 30, 37, 0.896) 76.8%,
+		rgba(25, 30, 37, 0.951) 83.7%,
+		rgba(25, 30, 37, 0.987) 91.3%,
+		rgba(25, 30, 37, 1.000) 100%);
 	}
 
 	div::before
@@ -157,22 +142,22 @@
 		left: 0;
 		right: unset;
 		background: linear-gradient(to left,
-			rgba(25, 30, 37, 0.000) 0%,
-			rgba(25, 30, 37, 0.013) 9.6%,
-			rgba(25, 30, 37, 0.049) 18.1%,
-			rgba(25, 30, 37, 0.104) 25.6%,
-			rgba(25, 30, 37, 0.175) 32.3%,
-			rgba(25, 30, 37, 0.259) 38.4%,
-			rgba(25, 30, 37, 0.352) 44.0%,
-			rgba(25, 30, 37, 0.450) 49.3%,
-			rgba(25, 30, 37, 0.550) 54.4%,
-			rgba(25, 30, 37, 0.648) 59.6%,
-			rgba(25, 30, 37, 0.741) 65.0%,
-			rgba(25, 30, 37, 0.825) 70.6%,
-			rgba(25, 30, 37, 0.896) 76.8%,
-			rgba(25, 30, 37, 0.951) 83.7%,
-			rgba(25, 30, 37, 0.987) 91.3%,
-			rgba(25, 30, 37, 1.000) 100%);
+		rgba(25, 30, 37, 0.000) 0%,
+		rgba(25, 30, 37, 0.013) 9.6%,
+		rgba(25, 30, 37, 0.049) 18.1%,
+		rgba(25, 30, 37, 0.104) 25.6%,
+		rgba(25, 30, 37, 0.175) 32.3%,
+		rgba(25, 30, 37, 0.259) 38.4%,
+		rgba(25, 30, 37, 0.352) 44.0%,
+		rgba(25, 30, 37, 0.450) 49.3%,
+		rgba(25, 30, 37, 0.550) 54.4%,
+		rgba(25, 30, 37, 0.648) 59.6%,
+		rgba(25, 30, 37, 0.741) 65.0%,
+		rgba(25, 30, 37, 0.825) 70.6%,
+		rgba(25, 30, 37, 0.896) 76.8%,
+		rgba(25, 30, 37, 0.951) 83.7%,
+		rgba(25, 30, 37, 0.987) 91.3%,
+		rgba(25, 30, 37, 1.000) 100%);
 	}
 
 	#scroll-prompt

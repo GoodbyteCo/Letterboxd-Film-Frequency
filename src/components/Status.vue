@@ -4,11 +4,10 @@
 	</div>
 </template>
 
-<script setup>
-	const props = defineProps({
-		type: String,
-		message: String
-	})
+<script setup lang="ts">
+	// Cant move to own file see: https://github.com/vuejs/vue-next/issues/4294
+	type StatusProps = { type: string; message: string; }
+	const props = defineProps<StatusProps>()
 </script>
 
 <style scoped>
