@@ -11,7 +11,7 @@
 		"core-js": "^3.19.1",
 		"glob-parent": "6.0.2",
 		"vue": "^3.2.20",
-		"vue-tippy": "^6.0.0-alpha.34"
+		"vue-tippy": "^6.0.0-alpha.36"
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue": "^1.9.4",
