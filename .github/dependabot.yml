@@ -1,36 +1,30 @@
+# Update dependencies
+#
+# Runs at 5:45 pm (PST) daily. These changes should get auto-merged in 
+# (see: auto-merge-dependabot.yml) if all checks pass.
 version: 2
 updates:
-  # Fetch and update latest `npm` packages
+
+  # NPM packages
   - package-ecosystem: npm
     directory: "/"
     schedule:
-      interval: weekly
-      time: "01:00"
+      interval: daily
+      time: "17:45"
+      timezone: America/Vancouver
     open-pull-requests-limit: 10
-    reviewers:
-      - holopollock
-      - qjack001
     assignees:
       - holopollock
       - qjack001
-    commit-message:
-      prefix: fix
-      prefix-development: chore
-      include: scope
-  # Fetch and update latest `github-actions` pkgs
+
+  # Github Actions
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: weekly
-      time: "01:00"
+      interval: daily
+      time: "17:45"
+      timezone: America/Vancouver
     open-pull-requests-limit: 10
-    reviewers:
-      - holopollock
-      - qjack001
     assignees:
       - holopollock
       - qjack001
-    commit-message:
-      prefix: fix
-      prefix-development: chore
-      include: scope

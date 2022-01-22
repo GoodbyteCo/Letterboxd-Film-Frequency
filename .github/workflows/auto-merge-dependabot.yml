@@ -1,0 +1,13 @@
+# Auto-merge dependabot updates
+name: auto-merge
+on:
+  pull_request:
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+        with:
+          target: major
+          github-token: ${{ secrets.GH_TOKEN }}
