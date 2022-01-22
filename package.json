@@ -4,20 +4,17 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite",
-		"build": "vue-tsc --noEmit && vite build",
-		"serve": "vite preview"
+		"build": "vue-tsc --noEmit && vite build"
 	},
 	"dependencies": {
-		"core-js": "^3.20.3",
-		"glob-parent": "6.0.2",
-		"vue": "^3.2.23",
+		"vue": "^3.2.28",
 		"vue-tippy": "^6.0.0-alpha.43"
 	},
 	"devDependencies": {
-		"@vitejs/plugin-vue": "^2.0.1",
+		"@vitejs/plugin-vue": "^2.1.0",
 		"typescript": "^4.5.4",
-		"vite": "^2.7.12",
-		"vue-tsc": "^0.3.0"
+		"vite": "^2.7.13",
+		"vue-tsc": "^0.31.0"
 	},
 	"browserslist": [
 		"> 1%",
