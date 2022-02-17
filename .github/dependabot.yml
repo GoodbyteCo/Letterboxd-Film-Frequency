@@ -9,7 +9,7 @@ updates:
   - package-ecosystem: npm
     directory: "/"
     schedule:
-      interval: daily
+      interval: weekly
       time: "17:45"
       timezone: America/Vancouver
     open-pull-requests-limit: 10
@@ -21,7 +21,7 @@ updates:
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: daily
+      interval: weekly
       time: "17:45"
       timezone: America/Vancouver
     open-pull-requests-limit: 10
