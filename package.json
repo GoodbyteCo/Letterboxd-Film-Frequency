@@ -7,7 +7,7 @@
 		"build": "vue-tsc --noEmit && vite build"
 	},
 	"dependencies": {
-		"vue": "^3.2.29",
+		"vue": "^3.2.31",
 		"vue-tippy": "^6.0.0-alpha.43"
 	},
 	"devDependencies": {
