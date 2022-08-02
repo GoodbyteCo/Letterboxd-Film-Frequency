@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 317 41" aria-labelledby="" class="graph">
-			<template v-if="username != ''">
+			<template v-if="user.username != ''">
 				<a v-for="day in getDaysInTheYear(year)"
 					:key="day"
 					:href="getLink(year, day)"
@@ -38,15 +38,16 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
 	import { directive } from 'vue-tippy'
+	import { useUserStore } from '../store/user';
 	import { getDate, getWeekDay, getWeekNumber, getDaysInTheYear } from '../utils/date'
 
 	// Cant move to own file see: https://github.com/vuejs/vue-next/issues/4294
 	type GraphProps = {
 		year: number,
 		films: Record<string, Record<string, number>>,
-		username: string
 	}
 	const props = defineProps<GraphProps>()
+	const user = useUserStore()
 
 	// scale increment = 1/5th the maximum watched in any one day
 	// or if object is undefined, scale increment = 1
@@ -74,7 +75,7 @@
 
 	const getLink = (year: number, day:number) => {
 		const date = getDate(year, day);
-		return `https://letterboxd.com/${props.username}/films/diary/for/${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getDate()).toString().padStart(2, '0')}/`
+		return `https://letterboxd.com/${user.username}/films/diary/for/${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${(date.getDate()).toString().padStart(2, '0')}/`
 	}
 </script>
 

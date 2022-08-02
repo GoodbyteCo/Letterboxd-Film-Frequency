@@ -1,11 +1,10 @@
 <template>
 	<controls 
-		v-on:changeUsername="username = $event"
 		v-on:changeYear="year = +$event"
 		:lowest-year="lowestYear"
 	/>
 	<status :message="statusMessage" :type="statusType"/>
-	<graph :year="year" :films="films" :username="username"/>
+	<graph :year="year" :films="films"/>
 	<goodbyte-footer/>
 </template>
 
@@ -15,17 +14,18 @@
 	import Status from './components/Status.vue'
 	import Graph from './components/Graph.vue'
 	import GoodbyteFooter from './components/Footer.vue'
+import { useUserStore } from './store/user'
 
 	// Data
-	const username = ref('')
+	const user = useUserStore()
 	const year = ref(new Date().getFullYear())
 	const lowestYear = ref(2011) // default to Letterboxd create date
 	const films = ref<Record<string, Record<string, number>>>({})
 	const statusMessage = ref('Enter your Letterboxd username to get data.')
 	const statusType = ref('') // 'error', 'info', or empty
 
-	watch(username, (newUsername) => {
-		updateGraph(newUsername)
+	watch(user, (newUser) => {
+		updateGraph(newUser.username)
 	})
 
 	const updateGraph = (username: string) => {

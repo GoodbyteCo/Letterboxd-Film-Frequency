@@ -9,10 +9,10 @@
 					id="username" 
 					name="u"
 					placeholder="ex: holopollock"
-					:value="username"
-					@change="username = ($event.target as HTMLInputElement).value"
-					v-on:blur="username = ($event.target as HTMLInputElement).value" 
-					v-on:keyup.enter="username = ($event.target as HTMLInputElement).value"
+					:value="user.username"
+					@change="user.username = ($event.target as HTMLInputElement).value"
+					v-on:blur="user.username = ($event.target as HTMLInputElement).value" 
+					v-on:keyup.enter="user.username = ($event.target as HTMLInputElement).value"
 					required
 				>
 			</div>
@@ -35,6 +35,7 @@
 
 <script setup lang="ts">
 	import { ref, watch } from 'vue'
+import { useUserStore } from '../store/user';
 
 	// Cant move to own file see: https://github.com/vuejs/vue-next/issues/4294
 	type ControlsProps = {
@@ -46,7 +47,6 @@
 
 	// Cant move to own file see: https://github.com/vuejs/vue-next/issues/4294
 	type ControlEmit = {
-		(event: 'changeUsername', value: string): void,
 		(event: 'changeYear', value: number): void
 	}
 	const emit = defineEmits<ControlEmit>()
@@ -54,20 +54,13 @@
 	// Data
 	const urlParams = new URLSearchParams(window.location.search)
 	const currentYear = new Date().getFullYear()
-	const username = ref(urlParams.get("u"))
+	const user = useUserStore()
+	user.username = urlParams.get("u") ?? ''  
 	const selectedYear = ref(currentYear)
 
 	// On Run
-	if (username.value != null) {
-		emit("changeUsername", username.value)
-	}
 
 	// Watchers
-	watch(username, (user, prevUser) => {
-		if (user != prevUser && user != null) {
-			emit("changeUsername", user)
-		}
-	})
 	watch(selectedYear, (year, prevYear) => {
 		if (year != prevYear) {
 			emit("changeYear", year)
