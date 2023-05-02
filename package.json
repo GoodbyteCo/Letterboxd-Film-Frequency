@@ -9,7 +9,7 @@
 	"dependencies": {
 		"pinia": "^2.0.22",
 		"vue": "^3.2.40",
-		"vue-tippy": "^6.0.0-alpha.43"
+		"vue-tippy": "^6.1.0"
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue": "^2.2.4",
